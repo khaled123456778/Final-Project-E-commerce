@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from './../Navbar/Navbar';
 import Footer from './../Footer/Footer';
 import { Outlet } from 'react-router-dom';
-import Register from '../register/register';
+import Register from '../Register/Register';
 
 export default function Layout() {
   return (
