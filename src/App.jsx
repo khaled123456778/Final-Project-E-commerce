@@ -34,7 +34,7 @@ import VerifyResetCode from './components/VerifyResetCode/verifyResetCode';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import ChangeUserAccount from './components/ChangeUserAccount/ChangeUserAccount';
 import ChangeUserPassword from './components/ChangeUserPassword/ChangeUserPassword';
-import Register from './components/register/register';
+import Register from './components/Register/Register';
 
 
 
