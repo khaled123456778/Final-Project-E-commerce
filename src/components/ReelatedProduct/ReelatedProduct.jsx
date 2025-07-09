@@ -101,7 +101,7 @@ let{showAlertKobry}=useContext(CartContext)
    </div>
   </Link>
   <button className=
-   'text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600  focus:outline-none dark:focus:ring-blue-800 hover:bg-transparent hover: border border-blue-500 w-full transition-all duration-200 translate-y-[200%] group-hover:translate-0 cursor-pointer '
+   'dark:text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600  focus:outline-none dark:focus:ring-blue-800 hover:bg-transparent hover: border border-blue-500 w-full transition-all duration-200 translate-y-[200%] group-hover:translate-0 cursor-pointer text-slate-950 '
    onClick={()=>showAlertKobry(RelatedProduct._id,token)}>
     Add To Cart</button>
   

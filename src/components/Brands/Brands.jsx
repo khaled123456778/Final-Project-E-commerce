@@ -43,7 +43,7 @@ export default function Brands() {
               alt={brand.name}
               className="w-24 h-24 object-contain mb-3"
             />
-            <h3 className="text-md font-medium  dar:text-blue-700">{brand.name}</h3>
+            <h3 className="text-md font-medium dark:text-slate-100  dar:text-blue-700">{brand.name}</h3>
           </div>
           </Link>
         ))}

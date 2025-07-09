@@ -54,13 +54,13 @@ if (isLoading) {
 
     </div>
 
-    { cartProducts===0 ? (
-      <div className="text-center my-4">
-        <h4 className='text-slate-800 text-2xl font-bold'>Your cart is empty.</h4>
+    { cartProducts?.length===0 ? (
+      <div className="text-center my-5">
+        <h4 className='text-slate-800 text-2xl font-bold h-screen'>Your cart is empty.</h4>
       </div>
     ) : null}
     
-{cartProducts?.map((cartProduct)=><div  key={cartProduct.product._id} className="relative overflow-x-auto shadow-md sm:rounded-lg my-10">
+{cartProducts?.map((cartProduct)=><div  key={cartProduct.product._id} className="relative overflow-x-auto shadow-md sm:rounded-lg my-10 ">
   <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -112,7 +112,7 @@ if (isLoading) {
           {cartProduct.price +" EGP "}
         </td>
         <td className="px-6 py-4">
-         {ispinner? <i className='fas fa-spin fa-spinner'></i>: <span   onClick={()=>deleteCartKobry(cartProduct.product._id)} href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Remove</span>}
+         {ispinner?<i className='fas fa-spin fa-spinner'></i>: <span   onClick={()=>deleteCartKobry(cartProduct.product._id)} href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Remove</span>}
         </td>
       </tr>
       

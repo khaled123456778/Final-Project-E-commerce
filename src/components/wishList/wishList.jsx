@@ -80,7 +80,7 @@ let {deleteWishListAlert,isLoadingBtn} =useContext(wishListContext)
 
             {/* Product Details */}
             <div className="p-4">
-              <h3 className="text-lg font-bold text-gray-800 mb-1 line-clamp-2">
+              <h3 className="text-lg font-bold dark:text-gray-100 mb-1 line-clamp-2">
                 {product.title}
               </h3>
               <p className="text-gray-500 text-sm mb-3 line-clamp-2">

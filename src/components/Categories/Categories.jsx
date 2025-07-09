@@ -45,7 +45,7 @@ export default function Categories() {
               />
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">
+              <h3 className="text-lg font-semibold dark:text-slate-100 group-hover:text-blue-600 transition-colors">
                 {category.name}
               </h3>
             </div>

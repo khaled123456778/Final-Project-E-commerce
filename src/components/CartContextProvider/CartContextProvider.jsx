@@ -11,9 +11,9 @@ export let CartContext = createContext()
 
 
 export default function CartContextProvider({children}) {
-  const [cartProducts, setCartproduct] = useState(null)
-  const [numOfCart, setNumOfCart] = useState(null)
-  const [totalPrice, setTotalPrice] = useState(null)
+  const [cartProducts, setCartproduct] = useState(0)
+  const [numOfCart, setNumOfCart] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
  const [isLoading, setisLoading] = useState(false)
  const [ispinner, setspinner] = useState(false)
  const [cartId, setCartId] = useState("")
@@ -38,6 +38,10 @@ const {token,userId,setUserId} = useContext(TokenContext)
     );
 console.log(data.cartId);
 setCartId(data.cartId)
+  setNumOfCart(data.numOfCartItems)
+     setTotalPrice(data.data.totalCartPrice)
+     setCartproduct(data.data.products)
+      queryClient.invalidateQueries(['cart']);
 console.log(cartId);
 
 
@@ -71,10 +75,10 @@ async function showAlertKobry(productId,token) {
 
  async function deleteCartItem(id) {
  try {
- 
+      setspinner(true)
   let {data}= await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{headers:{token}})
   
-     setisLoading(true)
+
        setNumOfCart(data.numOfCartItems)
      setTotalPrice(data.data.totalCartPrice)
      setCartproduct(data.data.products)
@@ -87,7 +91,7 @@ async function showAlertKobry(productId,token) {
   console.log(error);
   return true
   
- }finally{setisLoading(false)}}
+ }finally{setspinner(false)}}
 
 
   async function deleteCartKobry(id) {
@@ -138,7 +142,7 @@ async function showAlertKobry(productId,token) {
      let {data}= await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,{headers:{token}})
         setNumOfCart(0)
      setTotalPrice(0)
-     setCartproduct([])
+     setCartproduct(0)
      console.log(data);
       queryClient.invalidateQueries(['cart']);
      

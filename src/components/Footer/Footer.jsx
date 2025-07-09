@@ -4,8 +4,8 @@ export default function Footer() {
       {/* App link section */}
       <div className="container">
         <div className="  text-right">
-        <h2 className="text-2xl  text-gray-800 mb-2 text-left font-light">Get the FreshCart app</h2>
-        <p className="text-slate-800 mb-4 text-left font-light">
+        <h2 className="text-2xl text-slate-950  dark:text-gray-100 mb-2 text-left font-light">Get the FreshCart app</h2>
+        <p className="dark:text-slate-100 mb-4 text-left font-light text-slate-950">
           We will send you a link, open it on your phone to download the app.
         </p>
 
@@ -17,7 +17,7 @@ export default function Footer() {
           <input
             type="email"
             placeholder="Email .."
-            className=" bg-white w-full text-sm border h-[40px] border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-400 font-light"
+            className=" text-slate-950 dark:bg-white w-full text-sm border h-[40px] border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-400 font-light"
           />
           <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  rounded-sm  px-10 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 text-nowrap font-light text-md tracking-wide">Share App Link</button>
 
@@ -33,7 +33,7 @@ export default function Footer() {
         
         {/* Payment partners */}
  <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
-  <span className="text-gray-700 font-medium">Payment Partners</span>
+  <span className="dark:text-slate-100  text-slate-950 font-medium">Payment Partners</span>
 
   
 
