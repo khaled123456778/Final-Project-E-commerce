@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Categories from './../Categories/Categories';
 import { useQuery } from "@tanstack/react-query";
-import Spinner from "../Spinner./Spinner.";
+import Spinner from "../Spinner/Spinner.";
+
 
 
 export default function CategorySlider() {

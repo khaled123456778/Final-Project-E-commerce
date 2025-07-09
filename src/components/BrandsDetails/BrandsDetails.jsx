@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React from 'react'
-import Spinner from '../Spinner./Spinner.'
+
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import Spinner from '../Spinner/Spinner.'
 
 export default function BrandsDetails() {
     let {brandId} = useParams()

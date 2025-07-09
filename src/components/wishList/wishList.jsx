@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { CartContext } from '../CartContextProvider/CartContextProvider'
 import { TokenContext } from '../Context/TokenContextProvider'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import Spinner from '../Spinner./Spinner.'
+import Spinner from '../Spinner/Spinner.'
 import { wishListContext } from '../WishListContextProvider/WishListContextProvider'
 
 export default function WishList() {

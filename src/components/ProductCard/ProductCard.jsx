@@ -5,7 +5,7 @@ import Products from './../Products/Products';
 import { CartContext } from '../CartContextProvider/CartContextProvider';
 import toast from 'react-hot-toast';
 import { TokenContext } from '../Context/TokenContextProvider';
-import Spinner from '../Spinner./Spinner.';
+import Spinner from '../Spinner/Spinner.';
 import
  {
  useQuery

@@ -218,7 +218,7 @@ async function getCart() {
 
 
   return (
-<CartContext.Provider value={{addToCart,token,getCart,cartProducts,numOfCart,totalPrice,isLoading,deleteCartItem,deleteCartKobry,ispinner,updateCart,updateKobry,clearCart,cartId,getCart,showAlertKobry ,getUserOrders,productId}} >
+<CartContext.Provider value={{addToCart,token,getCart,cartProducts,numOfCart,totalPrice,isLoading,deleteCartItem,deleteCartKobry,ispinner,updateCart,updateKobry,clearCart,cartId,showAlertKobry ,getUserOrders,productId}} >
   {children}
 </CartContext.Provider>
   )

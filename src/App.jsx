@@ -7,7 +7,7 @@ import Products from './components/Products/Products';
 import Categories from './components/Categories/Categories';
 import Brands from './components/Brands/Brands';
 import Login from './components/Login/Login';
-import Register from './components/register/register';
+
 
 
 import NotFound from './components/notFound/notFound';
@@ -34,6 +34,9 @@ import VerifyResetCode from './components/VerifyResetCode/verifyResetCode';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import ChangeUserAccount from './components/ChangeUserAccount/ChangeUserAccount';
 import ChangeUserPassword from './components/ChangeUserPassword/ChangeUserPassword';
+import Register from './components/register/register';
+
+
 
 
  let client = new QueryClient()
@@ -58,7 +61,7 @@ export default function App() {
       {path:"/payement",element:<ProtectedRoute><Payement/></ProtectedRoute>},
       {path:"/allorders",element:<ProtectedRoute><Allorders/></ProtectedRoute>},
       // {index: true, element: <ProtectedRoute><Register /></ProtectedRoute>},
-      {path:"/Register", element:<Register />},
+      {path:"/Register", element:<Register/>},
       {index:true, element: <Login/>},
       {path:"/login", element:<Login />},
       {path:"/ForgotPassword", element:<ForgotPassword/>},

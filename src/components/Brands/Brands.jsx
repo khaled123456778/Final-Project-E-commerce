@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react'
-import Spinner from '../Spinner./Spinner.';
+
 import { Link, useParams } from 'react-router-dom';
+import Spinner from '../Spinner/Spinner.';
+
 
 export default function Brands() {
 

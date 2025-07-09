@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { CartContext } from '../CartContextProvider/CartContextProvider'
 import { TokenContext } from '../Context/TokenContextProvider'
-import Spinner from '../Spinner./Spinner.'
+
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import Spinner from '../Spinner/Spinner.'
 
 export default function Cart() {
   const {token} = useContext(TokenContext)
