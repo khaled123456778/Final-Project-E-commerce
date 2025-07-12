@@ -6,16 +6,23 @@ import ReelatedProduct from '../ReelatedProduct/ReelatedProduct';
 import { CartContext } from '../CartContextProvider/CartContextProvider';
 import { TokenContext } from '../Context/TokenContextProvider';
 import { useQuery } from '@tanstack/react-query';
+import { wishListContext } from '../WishListContextProvider/WishListContextProvider';
+import toast from 'react-hot-toast';
 
 export default function ProductDetails() {
   // const [productDetails, setProductDetails] = useState([])
   // const [isLoading, setisLoading] = useState(false)
-   let {addToCart,showAlertKobry} = useContext(CartContext)
+   let {spinnerProductId,showAlertKobry} = useContext(CartContext)
+   let {wishListToggle, wishListItems,setwishListToggleLoading,wishListToggleLoading}=useContext(wishListContext)
+
+   
    const {token} = useContext(TokenContext)
   let{id}=useParams()
   async function getDetails({queryKey}) {
     // setisLoading(true)
+    setwishListToggleLoading(id)
     let [productKey,productId]=queryKey
+     setwishListToggleLoading(null)
      return await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${productId}`)
     // console.log(data.data);
     // setisLoading(false)
@@ -37,9 +44,22 @@ export default function ProductDetails() {
     
     }
   )
-  console.log(data);
+//     async function showAlertKobry(productId,token) {
+// setSpinnerProductId(productId); // ✅ فعل السبينر لهذا المنتج فقط
+
+//   let flag =  await addToCart(productId,token)
+//   console.log(token);
   
 
+//   if (flag) {
+//     toast.success(' Added Successfully ');
+//   } else {
+//     toast.error('This is an error!');
+//   }
+//   setSpinnerProductId(null); // ✅ أوقف السبينر بعد الانتهاء
+// }
+  console.log(data);
+  
   if (isLoading) {
     return <div className="flex justify-center items-center h-screen">
       <div role="status">
@@ -51,49 +71,88 @@ export default function ProductDetails() {
 </div>
     </div>
   }
-  return (<>
-    <div className='grid grid-cols-[1fr_2fr] items-center gap-5'>
-      <div className="productImg theme my-4">
-        <img src={data.data.data.imageCover} alt=""  className='w-full'/>
+     const isInWishList = wishListItems.includes(data.data.data._id);
+
+   return (
+    <>
+      <div className="grid grid-cols-[1fr_2fr] items-center gap-5">
+        <div className="productImg theme my-4">
+          <img src={data.data.data.imageCover} alt={data.data.data.title} className="w-full" />
+        </div>
+
+        <div className="productContent theme p-10">
+          <h2 className="text-xl">{data.data.data.title}</h2>
+          <p className="text-slate-400 my-2 mb-3">{data.data.data.description}</p>
+          <span>{data.data.data?.category?.name}</span>
+
+          <button
+            className="flex justify-center items-center bg-white focus:ring-2 focus:ring-red-300 font-medium rounded-full text-sm p-2 me-3.5 mb-2 mt-2 border transition-all duration-200 cursor-pointer h-[31.6px]"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              wishListToggle(data.data.data._id, token);
+            }}
+          >
+       {wishListToggleLoading === data.data.data._id ? (
+  <i className="fas fa-spinner fa-spin text-red-400"></i>
+) : (
+  <i
+    className={`fas fa-heart text-xl transition-all duration-300 ${
+      isInWishList ? 'text-red-500' : 'text-gray-400'
+    }`}
+  ></i>
+)}
+
+            
+          </button>
+
+          {data.data.data.priceAfterDiscount && (
+            <span className="badge bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300 mx-1.5">
+              Discount
+            </span>
+          )}
+
+          <div className="cardFooter">
+            <div className="productRate flex justify-between">
+              <div className="price pt-5 px-0.5">
+                {data.data.data.priceAfterDiscount && (
+                  <span>{`${data.data.data.priceAfterDiscount} EGP`}</span>
+                )}
+                <span
+                  className={
+                    data.data.data.priceAfterDiscount
+                      ? 'line-through text-red-400 pt-6 mx-1.5'
+                      : 'pt-5 mx-1.5'
+                  }
+                >
+                  {data.data.data.price} EGP
+                </span>
+              </div>
+
+              <div className="rate">
+                <i className="fas fa-star text-amber-300 pt-6 mx-1.5"></i>
+                <span className="pt-5">{data.data.data.ratingsAverage}</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            className="text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 focus:outline-none dark:focus:ring-blue-800 hover:bg-transparent hover:border border-blue-500 w-full transition-all duration-200 translate-y-[200%] group-hover:translate-0 cursor-pointer hover:text-slate-400 hover:border-slate-400"
+            onClick={() => showAlertKobry(data.data.data._id, token)}
+            disabled={spinnerProductId === data.data.data._id}
+          >
+            {spinnerProductId === data.data.data._id ? (
+              <i className="fas fa-spinner fa-spin"></i>
+            ) : (
+              'Add To Cart'
+            )}
+          </button>
+        </div>
       </div>
-      <div className="productContent theme p-10">
-        <h2 className='text-xl'>{data.data.data.title}</h2>
-        <p className='text-slate-400 my-2 mb-3'>{data.data.data.description}</p>
-        <span className='' >{data.data.data?.category?.name}</span>
-        
-{data.data.data.priceAfterDiscount?<span className="badge bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300 mx-1.5 ">Discount</span>:null}
 
-<div className="cardFooter ">
-  
- <div className="productRate flex justify-between">
-  <div className="price  pt-5 px-0.5 ">
-    <span >{data.data.data.priceAfterDiscount?`${data.data.data.priceAfterDiscount} EGP`:null}</span>
-  <span className={data.data.data.priceAfterDiscount?"line-through text-red-400 pt-6 mx-1.5":"pt-5 mx-1.5"} >{data.data.data.price} EGP</span>
-  </div>
- <div className="rate">
-   <span>
-    <i className={data.data.data.priceAfterDiscount?'fas fa-star text-amber-300 pt-6 mx-1.5':" fas fa-star text-amber-300 pt-6 mx-1.5"}></i>
-    </span>
-     <span className={data.data.data.priceAfterDiscount?"pt-5":" pt-5"}>
-      {data.data.data.ratingsAverage}
-      </span>
- </div>
-      </div>
-
-    </div>
-     <button className=
- 'text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600  focus:outline-none dark:focus:ring-blue-800 hover:bg-transparent hover: border border-blue-500 w-full transition-all duration-200 translate-y-[200%] group-hover:translate-0 cursor-pointer hover:text-slate-400 hover:border-slate-400 '
- onClick={()=>showAlertKobry(data.data.data._id,token)}>
-  Add To Cart</button>
-
- </div>
-
- 
-    </div>
-   
-    <ReelatedProduct/>
+      <ReelatedProduct />
     </>
-  )
+  );
 }
 
 

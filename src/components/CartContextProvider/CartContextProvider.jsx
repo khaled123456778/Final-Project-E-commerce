@@ -16,10 +16,13 @@ export default function CartContextProvider({children}) {
   const [totalPrice, setTotalPrice] = useState(0)
  const [isLoading, setisLoading] = useState(false)
  const [ispinner, setspinner] = useState(false)
+
  const [cartId, setCartId] = useState("")
  const [userOrder, setuserOrder] = useState(null)
  const [productId, setProductId] = useState(null)
  const queryClient = useQueryClient();
+ const [spinnerProductId, setSpinnerProductId] = useState(null);
+ 
 
  
 
@@ -29,7 +32,7 @@ const {token,userId,setUserId} = useContext(TokenContext)
 
  async function addToCart(productId ,token) {
   
-  try {
+  try { 
     setisLoading(true)
     const { data } = await axios.post(
       "https://ecommerce.routemisr.com/api/v1/cart",
@@ -43,35 +46,12 @@ setCartId(data.cartId)
      setCartproduct(data.data.products)
       queryClient.invalidateQueries(['cart']);
 console.log(cartId);
-
-
-   
-
-  
     return true;
   } catch (error) {
     console.error(error);
     return false;
   }finally{setisLoading(false)}
 }
-
-async function showAlertKobry(productId,token) {
-  let flag =  await addToCart(productId,token)
-
-  if (flag) {
-    toast.success(' Added Successfully ');
-  } else {
-    toast.error('This is an error!');
-  }
-}
-
-
-
-
-
-
-
-
 
  async function deleteCartItem(id) {
  try {
@@ -92,10 +72,39 @@ async function showAlertKobry(productId,token) {
   return true
   
  }finally{setspinner(false)}}
+ 
+
+
+
+
+
+
+
+
+
+
+
+  async function showAlertKobry(productId,token) {
+setSpinnerProductId(productId); // ✅ فعل السبينر لهذا المنتج فقط
+
+  let flag =  await addToCart(productId,token)
+  console.log(token);
+  
+
+  if (flag) {
+    toast.success(' Added Successfully ');
+  } else {
+    toast.error('This is an error!');
+  }
+  setSpinnerProductId(null); // ✅ أوقف السبينر بعد الانتهاء
+}
+
 
 
   async function deleteCartKobry(id) {
-// setspinner(true)
+
+setspinner(true)
+
 
   let flag = await deleteCartItem(id)
  if (flag) {
@@ -103,9 +112,13 @@ async function showAlertKobry(productId,token) {
    } else {
      toast.error('This is an error!');
    }
-  //  setspinner(false)
+   setspinner(false)
    
   }
+
+
+
+
 
    async function updateCart(id,count) {
 
@@ -205,6 +218,7 @@ async function getCart() {
 
 
 
+
   
 
 //  const { mutate, isPending, isSuccess, error } = useMutation({
@@ -222,7 +236,7 @@ async function getCart() {
 
 
   return (
-<CartContext.Provider value={{addToCart,token,getCart,cartProducts,numOfCart,totalPrice,isLoading,deleteCartItem,deleteCartKobry,ispinner,updateCart,updateKobry,clearCart,cartId,showAlertKobry ,getUserOrders,productId}} >
+<CartContext.Provider value={{addToCart,token,getCart,cartProducts,numOfCart,totalPrice,isLoading,deleteCartItem,ispinner,updateCart,updateKobry,clearCart,cartId ,getUserOrders,productId,setspinner,deleteCartKobry,setSpinnerProductId,spinnerProductId,showAlertKobry,setspinner}} >
   {children}
 </CartContext.Provider>
   )
