@@ -19,7 +19,7 @@ function DarkModeToggle() {
     
       // window.matchMedia('(prefers-color-scheme: dark)').matches;---return true or false
       const isSytemDark  = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setDarkMode(systemMode);
+      setDarkMode(isSytemDark);
       if (isSytemDark) {
         document.documentElement.classList.add('dark');  
       } else {
