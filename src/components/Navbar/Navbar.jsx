@@ -1,117 +1,165 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from "../../assets/finalProject assets/logo.svg";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { TokenContext } from '../Context/TokenContextProvider';
-import {  useLocation } from 'react-router-dom';
-
+import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
+import { NavLink } from 'react-router-dom';
 
 
 export default function Navbar() {
   const location = useLocation();
-const isRegisterPage = location.pathname === "/Register";
-// const isloginPage = location.pathname === "/";
-// const isLoginPage = location.pathname === "/Login"&&"/login"&&"/"&&"/ForgotPassword"&&"/verifyResetCode"&&"/ResetPassword"&&"/ChangeUserAccount"&&"/ChangeUserPassword";
+  const navigate = useNavigate();
 
+  const hiddenPaths = [
+    "/", "/login", "/Login", "/ForgotPassword",
+    "/verifyResetCode", "/ResetPassword",
+    "/ChangeUserAccount", "/ChangeUserPassword"
+  ];
 
-const hiddenPaths = [
-  "/",
-  "/login",
-  "/Login",
-  "/ForgotPassword",
-  "/verifyResetCode",
-  "/ResetPassword",
-  "/ChangeUserAccount",
-  "/ChangeUserPassword",
-];
+  const isLoginPage = hiddenPaths.includes(location.pathname);
+  const isRegisterPage = location.pathname === "/Register";
 
-const isLoginPage = hiddenPaths.includes(location.pathname);
+  const { token, setToken, setlogedUser } = useContext(TokenContext);
 
+  const [menuOpen, setMenuOpen] = useState(false);
 
- const [register, setregister] = useState(<Link to="/Register"><span >Register</span></Link>)
-//  const [register, setregister] = useState(<Link to="/Register"><span >Register</span></Link>)
- let logoutNav=  useNavigate()
+  function logOut() {
+    setToken(null);
+    localStorage.removeItem("token");
+    setlogedUser(false);
+    navigate("/Login");
+  }
 
- let{token,setToken,setlogedUser,logedUser}= useContext(TokenContext)
-
- function logOut() {
-  setToken(null)
-  localStorage.removeItem("token")
-  setlogedUser(false)
-logoutNav("/Login")
-
- }
   return (
-<nav className='navbar bg-slate-500 py-4  w-full fixed  top-0 overflow-auto z-[999] theme '>
+    <nav className="theme">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-1">
+        <Link to="/home" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src={logo} className="h-8" alt="Logo" />
+          {/* <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">YourApp</span> */}
+        </Link>
 
-  <div className=" container  ">
+        {/* Hamburger */}
+        <button
+          type="button"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span className="sr-only">Open main menu</span>
+          <svg className="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 17 14">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
 
-  <div className="navContent flex gap-3  ">
+        {/* Menu */}
+        <div className={`${menuOpen ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-default">
+          <ul className="font-medium flex flex-col p-2 md:p-0 mt-4 border border-gray-100 rounded-lg 
+                         md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 
+                        ">
+            {
+              !isLoginPage && !isRegisterPage && (
+                <>
+                <li>
+<NavLink
+  to="/Home"
+  className={({ isActive }) =>
+    isActive
+      ? "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-100"
+      : "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-0"
+  }
+>
+  Home
+</NavLink>
 
-     <div className="navImg flex sm:items-center xs:items-center" >
-    
-    <Link to="/home"> <img src={logo} alt="logo"  /></Link>
-   </div>
+</li>
+<li>
+  <NavLink
+    to="/Products"
+    className={({ isActive }) =>
+    isActive
+      ? "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-100"
+      : "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-0"
+  }
+  >
+    Products
+  </NavLink>
+</li>
+<li>
+  <NavLink
+    to="/Cart"
+     className={({ isActive }) =>
+    isActive
+      ? "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-100"
+      : "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-0"
+  }
+  >
+    Cart
+  </NavLink>
+</li>
+<li>
+  <NavLink
+    to="/categories"
+    className={({ isActive }) =>
+    isActive
+      ? "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-100"
+      : "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-0"
+  }
+  >
+    Categories
+  </NavLink>
+</li>
+<li>
+  <NavLink
+    to="/Brands"
+     className={({ isActive }) =>
+    isActive
+      ? "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-100"
+      : "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-0"
+  }
+  >
+    Brands
+  </NavLink>
+</li>
+<li>
+  <NavLink
+    to="/WishList"
+     className={({ isActive }) =>
+    isActive
+      ? "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-100"
+      : "nav-link relative after:absolute after:left-0 after:-bottom-0.5 after:w-full after:h-[2px] after:bg-blue-700 after:transition-transform after:duration-300 after:origin-left after:scale-x-0"
+  }
+  >
+    WishList
+  </NavLink>
+</li>
 
-   <div className="navLinks flex items-center gap-3 font-semibold">
-   {  !isLoginPage&&!isRegisterPage?
-    <>
-      <Link  to="/Home">Home</Link>
-      <Link   to="/Products">Products</Link>
-      <Link   to="/Cart">Cart</Link>
-      <Link   to="/categories">categories</Link>
-      <Link   to="/Brands">Brands</Link>
-      <Link   to="/WishList">WishList</Link>
-    </>:null
-   }
-   </div>
+                </>
+              )
+            }
 
-   <div className="navIcons ms-auto flex items-center gap-3">
-    <i className='fab fa-facebook'></i>
-    <i className='fab fa-youtube'></i>
-    <i className='fab fa-tiktok'></i>
-    <i className='fab fa-twitter'></i>
-    <i className='fab fa-instagram'></i>
-    <i className='fab fa-github'></i>
-   </div>
+            {/* Auth Links */}
 
-   <div className="navspans flex  gap-3">
-   
-  {!isLoginPage && !isRegisterPage ?  (
-    <>
-      
-      <span className='cursor-pointer underline' onClick={logOut}>Log out</span>
-    </>
-  ) : null}
- 
-{!isRegisterPage && (
-  <Link  className='underline' to="/Register">
-    <span>Register</span>
-  </Link>
-)}
-{/* {!isloginPage && (
-<>
-      <Link to="/Home">Home</Link>
-      <Link to="/Products">Products</Link>
-      <Link to="/Cart">Cart</Link>
-      <Link to="/categories">categories</Link>
-      <Link to="/Brands">Brands</Link>
-    </>
-)} */}
+            {
+              !isRegisterPage && (
+                <li>
+                  <Link to="/Register" className="nav-link">Register</Link>
+                </li>
+              )
+            }
 
-
-
-       
-    
-     
-    
-    
-   </div>
-
-
-  </div>
-  </div>
-</nav>
-
-
-  )
+            {
+              !isLoginPage && !isRegisterPage && (
+                <li>
+                  <span onClick={logOut} className="cursor-pointer nav-link text-red-600 hover:text-red-800">Logout</span>
+                </li>
+              )
+            }
+            {/* Dark Mode Toggle */}
+            <li>
+              <DarkModeToggle />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 }
