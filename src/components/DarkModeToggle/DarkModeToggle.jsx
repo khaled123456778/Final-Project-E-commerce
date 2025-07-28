@@ -42,7 +42,7 @@ function DarkModeToggle() {
   };
 
   return (
-    <button onClick={toggleDarkMode} className='mt-2'>
+    <button onClick={toggleDarkMode} className='mt-1'>
       {darkMode ? <BiSolidSun /> : <BsFillMoonFill />}
     </button>
   );
